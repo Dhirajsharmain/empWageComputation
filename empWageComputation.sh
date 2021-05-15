@@ -1,27 +1,31 @@
 #!/bin/bash -x
 
-empCheck=$((RANDOM%3))
-empRatePerHr=20 
-isFullTime=1
-isPartTime=2
-numOfWorkingDays=5
-totalEmpHrs=0
+EMP_RATE_PER_HR=20 
+IS_FULL_TIME=1
+IS_PART_TIME=2
+NUM_OF_WORKING_DAYS=20
+MAX_HRS_IN_MONTHS=50
 
-for ((day=1; day<=$numOfWorkingDays; day++))
+#VARIABLES
+totalEmpHrs=0
+totalWorkingDays=0
+
+while [[ $totalEmpHrs -lt $MAX_HRS_IN_MONTHS && $totalWorkingDays -lt $NUM_OF_WORKING_DAYS ]]
 do
-empCheck=$((RANDOM%3))
+	((totalWorkingDays++))
+	empCheck=$((RANDOM%3))
 	case $empCheck in
-		$isFullTime)
+		$IS_FULL_TIME)
 		empHrs=8 
 		;;
-		$isPartTime)
+		$IS_PART_TIME)
 		empHrs=4
 		;;
 		*)
 		empHrs=0
 		;;
 	esac
-totalEmpHrs=$(($totalEmpHrs+$empHrs))
+	totalEmpHrs=$(($totalEmpHrs+$empHrs))
 done
-wage=$(($empRatePerHr*$totalEmpHrs))
+wage=$(($EMP_RATE_PER_HR*$totalEmpHrs))
 echo "Wages is : $wage"
